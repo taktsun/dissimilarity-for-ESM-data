@@ -4,6 +4,48 @@ A demo on calculating Bray-Curtis dissimilarity with multivariate time series da
 Download the below R script for annotated codes:
 
 	BrayCurtisDissimilarity_for_ESMdata.R
+# So, what is Bray-Curtis dissimilarity?
+Bray-Curtis dissimilarity is a way of measuring how different two sets of things are, based on the relative abundances of the things in each set. This is often used in ecology to compare the species composition of different environments or time points, but it can be used to compare any kind of set where each item has a numerical abundance - for example, intensities of using emotion regulation strategies.
+
+<details>
+  <summary>Click to read an example</summary>
+Imagine you want to see how Edmund use regulate his emotions upon hearing some shocking news, for example, feeling anxious on his safety hearing there is a war outbreak. Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning they did not use the strategy at all and 10 meaning they used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get:
+
+11am:
+
+- Reappraisal: 2 
+-  Distraction: 8
+-   Social Sharing: 0
+
+1pm:
+
+- Reappraisal: 3  
+- Distraction: 5
+-   Social Sharing: 2
+
+To calculate the Bray-Curtis dissimilarity within Edmund's reporting between 11am and 1pm, you:
+
+1.  Add up the total intensity of using ER strategies for time point:
+
+-   11am has a total of 10 (2+8+0)
+-   1pm has a total of 10 (3+5+2)
+
+2. Identify the set of minimum intensity across time points. the minimum intensity is 2 for reappraisal  (out of 2 and 3), 5 for distraction (5, 8), and 0 for social sharing (0,2). This makes a set of (2,5,0). 
+3.  For each time point, add up the intensity exclusive to that time point. This is subtracting the set of intensity with the minimum set. So,
+
+-   For 11am: (2+8+0) - (2+5+0) = 3
+-   For 1pm: (3+5+2) - (2+5+0) = 3
+
+3.  Add up the exclusive intensity of the two time points and divide it by the total intensity get Bray-Curtis dissimilarity:
+
+-  (3+3)/(10+10) = 0.333
+
+A value of 0 in Bray-Curtis dissimilarity would indicate that the two sets are identical, while a value of 1 would indicate that the two sets share no species in common. The Bray-Curtis dissimilarity between 11am and 1pm is 0.333. This tells you that the two time points are different, but not to a great extent.  
+
+</details>
+
+
+
 
 # Required packages
 	# Install the below if needed:
@@ -24,6 +66,7 @@ Download BrayCurtisDissimilarity_Calculate.R at this repo.
 |1|4|3|0|
 |1|5|3|0|
 |1|6|0|3|
+
 Run the following code to get Edmund's dataset above, which is equivalent to Table 1 in the paper:
 
 	dfTable1 <- data.frame("ppnr" = rep(1,6),"triggerid"=c(1:6),

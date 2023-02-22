@@ -10,20 +10,13 @@ Bray-Curtis dissimilarity is a way of measuring how different two sets of things
 <details>
   <summary>Click to expand on an example to calculate the full index</summary>
 
-Imagine you want to see how Edmund use regulate his emotions upon hearing some shocking news, for example, feeling anxious on his safety hearing there is a war outbreak. Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning they did not use the strategy at all and 10 meaning they used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get for 11am and 1pm:
+Imagine you want to see how Edmund regulates his emotions, for example, the anxiety about safety upon hearing there is a war outbreak. Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning he did not use the strategy at all and 10 meaning he used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get for 11am and 1pm:
 
-11am:
-
-- Reappraisal: 2 
--  Distraction: 8
--   Social Sharing: 0
-
-1pm:
-
-- Reappraisal: 3  
-- Distraction: 5
--   Social Sharing: 2
-
+|Time|Reappraisal|Distraction|SocialSharing|
+|---|----------|-----------|----|
+|11am|2|8|0|
+|1pm|3|5|2|
+	
 To calculate the Bray-Curtis dissimilarity within Edmund's reporting between 11am and 1pm, you:
 
 1.  Add up the total intensity of using ER strategies for time point:
@@ -58,9 +51,13 @@ Let's look at the 11am and 1pm example again:
 - In other words, the dissimilarity between Edmund's reporting at 11am and 1pm is solely due to replacement - or strategy switching.
 
 Let us contrast the above example with another set of ratings we get from Edmund at 3pm:
-- Reappraisal: 1
-- Distraction: 3
-- Social Sharing: 0
+
+|Time|Reappraisal|Distraction|SocialSharing|
+|---|----------|-----------|----|
+|11am|2|8|0|
+|1pm|3|5|2|
+|3pm|1|3|0|
+
 
 Repeating the calculation steps of Bray-Curtis dissimilarity between 1pm and 3pm:
 - Total intensity = (3+5+2) + (1+3+0) = 10+4 = 14

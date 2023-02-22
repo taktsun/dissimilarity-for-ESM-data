@@ -1,9 +1,23 @@
 # Dissimilarity-for-ESM-data
 A demo on calculating Bray-Curtis dissimilarity with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
-Download the below R script for annotated codes:
+Download BrayCurtisDissimilarity_for_ESMdata.R and BrayCurtisDissimilarity_Calculate.R for annotated codes.
 
-	BrayCurtisDissimilarity_for_ESMdata.R
+<details>
+	<summary>Or click here to expand the code block for copy-and-paste:</summary>
+	
+	<details>
+	<summary>BrayCurtisDissimilarity_for_ESMdata.R </summary>
+		add code...
+</details>
+	<details>
+	<summary>BrayCurtisDissimilarity_Calculate.R </summary>
+		add code...
+</details>
+	
+	
+</details>
+
 # So, what is Bray-Curtis dissimilarity?
 Bray-Curtis dissimilarity is a way of measuring how different two sets of things are, based on the relative abundances of the things in each set. This is often used in ecology to compare the species composition of different environments or time points, but it can be used to compare any kind of set where each item has a numerical abundance - for example, intensities of using emotion regulation strategies.
 
@@ -142,8 +156,6 @@ Group (person-level in ESM) output:
 
 # Troubleshooting
 
-## How do I convert long data to wide data?
-
 ## Why is there NA/NaN?
 In general,
 - NA is due to missing data
@@ -220,5 +232,13 @@ Perhaps it is easier to figure out these NA/NaN behaviours by running these code
 	# results of calculation
 	data.frame(ppname,calcBrayCurtisESM(dfManual, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm))
 
+## How do I convert long data to wide data?
 
+Note that you need to have run the codes from the above subsection about NA/NaN for the below codes to work:
 
+	# create a long dataset from the manual dataset for illustration...
+	dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar = varUniqueID)
+	# Reshape back to wide format
+	dfLongToWide <- reshape(dataLong, idvar = varUniqueID, timevar = "Strategy", varying = varNameManual, direction = "wide")
+
+	calcBrayCurtisESM(dfLongToWide, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)

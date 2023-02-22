@@ -2,10 +2,9 @@
 # What is Bray-Curtis dissimilarity?
 Bray-Curtis dissimilarity is a way of measuring how different two sets of things are, based on the relative abundances of the things in each set. This is often used in ecology to compare the species composition of different environments or time points, but it can be used to compare any kind of set where each item has a numerical abundance - for example, intensities of using emotion regulation strategies.
 
-<details>
-  <summary>Click to expand on an example to calculate the full index</summary>
+# Edmund's day in regulating his emotions
 
-Imagine you want to see how Edmund regulates his emotions, for example, the anxiety about safety upon hearing there is a war outbreak. Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning he did not use the strategy at all and 10 meaning he used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get for 11am and 1pm:
+Imagine you want to see how Edmund regulates his emotions (e.g, the anxiety about safety upon hearing there is a war outbreak in a nearby country). Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning he did not use the strategy at all and 10 meaning he used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get for 11am and 1pm:
 
 |Time|Reappraisal|Distraction|SocialSharing|
 |---|----------|-----------|----|
@@ -31,10 +30,7 @@ To calculate the Bray-Curtis dissimilarity within Edmund's reporting between 11a
 
 A value of 0 in Bray-Curtis dissimilarity would indicate that the two sets are identical, while a value of 1 would indicate that the two sets share no species in common. The Bray-Curtis dissimilarity between 11am and 1pm is 0.333. This tells you that the two time points are different, but not to a great extent.  
 
-</details>
-
-<details>
-  <summary>Click to read about partitioning and its benefits</summary>
+# Partitioning of Bray-Curtis disssimilarity and its benefits
 
 Apart from using its full index, partitioning Bray-Curtis dissimilarity into two subcomponents has been a common practice in ecological research for many years, as it can provide insight into the processes that are driving differences between communities. Specifically, Bray-Curtis dissimilarity can be partitioned into contributions from **replacement** (which describes how abundance of one species is shifted to another) and **nestedness** (which describes unidirectional changes in overall species abundance).
 
@@ -56,7 +52,7 @@ Let us contrast the above example with another set of ratings we get from Edmund
 
 Repeating the calculation steps of Bray-Curtis dissimilarity between 1pm and 3pm:
 - Total intensity = (3+5+2) + (1+3+0) = 10+4 = 14
-- Minimum intensity set: {1,3,0}
+- Minimum intensity set: (1,3,0)
 - Exclusive intensity 1pm: (3+5+2) - (1+3+0) = 6
 - Exclusive intensity 3pm: (1+3+0) - (1+3+0) = 0
 - Bray-Curtis dissimilarity full index = (6+0)/14 = 0.429
@@ -65,10 +61,7 @@ Repeating the calculation steps of Bray-Curtis dissimilarity between 1pm and 3pm
 
 This time, the dissimilarity between Edmund's reporting at 11am and 1pm is solely due to nestedness - or endorsement change.
 
-</details>
-
-<details>
-  <summary>Click to see the formulae of the full index and two subcomponents</summary>
+# Formulae of the full index and two subcomponents
 
 ### Intermediate calculation steps
 Let *x* be a multivariate dataset with *N* variables reported over *n* measurement occasions,  so that *x*<sub>it</sub> refers to a particular value of the *i*<sup>th</sup> variable at time *t*.
@@ -85,4 +78,4 @@ $$\frac{min(B,C)}{2A+min(B,C)}$$
 **Nestedness subcomponent** ( = full index - replacement)
 $$\frac{\left | B-C \right |}{2A+B+C}\times \frac{A}{A+min(B,C)}$$
 
-</details>
+

@@ -2,18 +2,7 @@
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
-Download BrayCurtisDissimilarity_for_ESMdata.R (xx file to be added) and BrayCurtisDissimilarity_Calculate.R (xx file to be added) for annotated codes. Or you may copy them here:
-
-<details>
-	<summary>BrayCurtisDissimilarity_for_ESMdata.R </summary>
-
-</details>
-	
-
-<details>
-	<summary>BrayCurtisDissimilarity_Calculate.R </summary>
-
-</details>
+Download [BrayCurtisDissimilarity_for_ESMdata.R](BrayCurtisDissimilarity_for_ESMdata.R) and [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) for annotated codes. 
 
 # Required packages
 
@@ -94,6 +83,7 @@ Other conditions but they are likely to have been met:
 ## Why is there NA/NaN?
 In general,
 - NA is due to missing data
+	- so the first observation of a person will always return NA for successive difference because there is no previous observation to compare with
 - NaN is due to division by zero, brought by zero values in all variables
 
 Let's denote the moment of interest as *t* .

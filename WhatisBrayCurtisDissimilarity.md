@@ -2,7 +2,7 @@
 # What is Bray-Curtis dissimilarity?
 Bray-Curtis dissimilarity is a way of measuring how different two sets of things are, based on the relative abundances of the things in each set. This is often used in ecology to compare the species composition of different environments or time points, but it can be used to compare any kind of set where each item has a numerical abundance - for example, intensities of using emotion regulation strategies.
 
-# Edmund's day in regulating his emotions
+# Example: Edmund's day in regulating his emotions
 
 Imagine you want to see how Edmund regulates his emotions (e.g, the anxiety about safety upon hearing there is a war outbreak in a nearby country). Over the day, you ask Edmund to rate every 2 hours the intensity with which he used three different emotion regulation strategies, on a scale from 0 to 10, with 0 meaning he did not use the strategy at all and 10 meaning he used the strategy extremely intensively. The three strategies are cognitive reappraisal,  distraction, and social sharing. Here are the ratings you get for 11am and 1pm:
 

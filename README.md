@@ -132,13 +132,19 @@ Per-observation (moment-level in ESM study) output:
 Group (person-level in ESM) output:
 - person_BrayCurtisFull.suc:	Person-mean of BrayCurtisFull.suc
 - person_... : Person-mean of other moment level dissimilarity 
-# What is needed to use calculate dissimilarity?
-- Values >=0
+# How should I prepare my data to calculate dissimilarity?
+- Use wide data format (i.e., each variable assigned to a column; see below on how to reshape data from long format to wide format)
+- Sort data first by group (person in ESM study), then observation in ascending order (time point in ESM study)
+- Make sure all values are >=0
 - At least 2 observations (e.g. Time Point 1 to 6), where 
-	- both have at least 2 variables (e.g., Distraction and Social Sharing)  with values
-- Wide data format (see below on how to reshape data from long format to wide format)
+	- both have at least 2 variables (e.g., Distraction and Social Sharing) with values
 - At least 1 observation has at least 1 non-zero value
-# Why is there NA/NaN?
+
+# Troubleshooting
+
+## How do I convert long data to wide data?
+
+## Why is there NA/NaN?
 In general,
 - NA is due to missing data
 - NaN is due to division by zero, brought by zero values in all variables
@@ -158,5 +164,61 @@ Let's denote the moment of interest as *t* .
 			- for **the full index of THOSE observations** 
 			- for **all subcomponents in ALL observations** 
 		- in only 1 observation will return NaN for **all subcomponents in ALL observations** 
+
+Perhaps it is easier to figure out these NA/NaN behaviours by running these codes and inspect the output:
+
+	allowSub.na.rm <- TRUE
+	allowPerson.na.rm <- TRUE
+	varUniqueID <- c("ppnr","triggerid")
+	personName <- c("Edmund","EdmundReorder631452","EdMiss34", "EdZero34")
+	varNameManual <- c("Distraction","SocialSharing")
+	nt <- 6 # number of time points
+
+
+	np <- length(personName) # number of persons
+	nv <- length(varNameManual) # number of variables (ER strategies)
+	ppid<-unlist(lapply(1:np, function(x) rep(x,nt)))
+	ppname <- unlist(lapply(1:np, function(x) rep(personName[x],nt)))
+
+
+	#entering the same dataset by variable (strategy)
+	dataManual <- matrix(c(1,8,5,3,3,0,0,5,1,3,3,8,1,8,NA,NA,3,0,1,8,0,0,3,0, #Distraction
+			       0,0,2,0,0,3,3,2,0,0,0,0,0,0,2,NA,0,3,0,0,0,0,0,3), #Social sharing
+			     nrow = nt*np, ncol = nv, dimnames = list(c(),varNameManual))
+	#enter the same dataset by time point
+	dataManual <- matrix(c(1,0, #Edmund's data
+			       8,0,
+			       5,2,
+			       3,0,
+			       3,0,
+			       0,3,
+			       0,3, #Edmund's data reordered
+			       5,2, #in the order of time point 6,3,1,4,5,2
+			       1,0,
+			       3,0,
+			       3,0,
+			       8,0,
+			       1,0, #Edmund with missing data at time point 3 & 4
+			       8,0,
+			       NA,2,
+			       NA,NA,
+			       3,0,
+			       0,3,
+			       1,0, #Edmund with time point 3 & 4 rated all zeros
+			       8,0, #Note how setting allowSub.na.rm = FALSE
+			       0,0, #makes all all-moment subcomponents become NaN
+			       0,0,
+			       3,0,
+			       0,3),
+				byrow = TRUE, nrow = nt*np, ncol = nv, dimnames = list(c(),varNameManual))
+
+	beep <- c(rep(1:nt,np))
+	identifiers <- data.frame(cbind(ppid,beep))
+	names(identifiers) <- varUniqueID
+	dfManual <- data.frame(cbind(identifiers,dataManual))
+
+	# results of calculation
+	data.frame(ppname,calcBrayCurtisESM(dfManual, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm))
+
 
 

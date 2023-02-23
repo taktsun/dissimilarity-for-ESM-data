@@ -67,7 +67,9 @@ This time, the dissimilarity between Edmund's reporting at 11am and 1pm is solel
 Let *x* be a multivariate dataset with *N* variables reported over *n* measurement occasions,  so that *x*<sub>it</sub> refers to a particular value of the *i*<sup>th</sup> variable at time *t*.
 $$A=\sum_{i=1}^{N}min(x_{ij},x_{ik})$$
 
-$$B=\sum_{i=1}^{N}x_{ij}-A$$ $$C=\sum_{i=1}^{N}x_{ik}-A$$
+$$B=\sum_{i=1}^{N}x_{ij}-A$$ 
+
+$$C=\sum_{i=1}^{N}x_{ik}-A$$
 
 ### Formulae of Bray-Curtis dissimilarity and its subcomponents
 

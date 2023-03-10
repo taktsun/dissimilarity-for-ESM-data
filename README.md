@@ -1,4 +1,5 @@
 
+
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
@@ -7,15 +8,17 @@ Download [BrayCurtisDissimilarity_for_ESMdata.R](BrayCurtisDissimilarity_for_ESM
 # Required packages
 
 	# Install the below if needed:
-	#     install.packages(c("betapart","haven"))
-	#     remotes::install_github("wviechtb/esmpack")
-	#
-	# Download BrayCurtisDissimilarity_Calculate.R at 
-	# https://github.com/taktsun/dissimilarity-for-ESM-data
+	    install.packages(c("betapart","haven"))
+	    remotes::install_github("wviechtb/esmpack")
 
-	library(betapart)
-	library(haven) # for reading sav files
-	source("BrayCurtisDissimilarity_Calculate.R")
+	# Load libraries
+		library(betapart)
+		library(haven) # for reading sav files
+
+	# Download and source BrayCurtisDissimilarity_Calculate.R 
+	# https://github.com/taktsun/dissimilarity-for-ESM-data
+	
+		source("https://github.com/taktsun/dissimilarity-for-ESM-data/raw/40c407b0ca9261eab56e8de822c3de1657645105/BrayCurtisDissimilarity_Calculate.R")
 
 
 # Quickly reproducing Edmund's 2-variable dataset
@@ -28,54 +31,63 @@ Download [BrayCurtisDissimilarity_for_ESMdata.R](BrayCurtisDissimilarity_for_ESM
 |1|5|3|0|
 |1|6|0|3|
 
-Run the following code to get Edmund's dataset above, which is equivalent to Table 1 in the paper:
+Run the following code to get Edmund's dataset above, which is equivalent to Table 1 in the paper: 
 
 	dfTable1 <- data.frame("ppnr" = rep(1,6),"triggerid"=c(1:6),
 	                       matrix(c(1,8,5,3,3,0,0,0,2,0,0,3), nrow = 6, ncol = 2,
 	                       dimnames = list(c(),c("Distraction","SocialSharing"))))
+	                       
 Run the following code to calculate Bray-Curtis dissimilarity with Edmund's data:
 
-	calcBrayCurtisESM(dfTable1, c("Distraction","SocialSharing"),"ppnr","triggerid")
+	calcBrayCurtisESM(dfTable1, 
+					c("Distraction","SocialSharing"),"ppnr","triggerid")
 # What is the output?
-New columns are created and attached to the original dataframe.
-Per-observation (moment-level in ESM study) output:
-- BrayCurtisFull.suc:	The full Bray-Curtis dissimilarity index calculated in successive difference
-- BrayCurtisRepl.suc:	The replacement subcomponent calculated in successive difference
-- BrayCurtisNest.suc:	The nestedness subcomponent calculated in successive difference
-- BrayCurtisFull.amm:	The full Bray-Curtis dissimilarity index calculated in all-moment comparison
-- BrayCurtisRepl.amm:	The replacement subcomponent calculated in all-moment comparison
-- BrayCurtisNest.amm:	The nestedness subcomponent calculated in all-moment comparison
+New columns are created and attached to the original dataframe. In the context of ESM study, an observation is a moment, and a group is a person.
+|Variable|Level|Subcomponent?|Comparison approach|
+|---|---|---|---|
+|BrayCurtisFull.suc|Observation|Full index|Successive Difference|
+|BrayCurtisRepl.suc|Observation|Replacement|Successive Difference|
+|BrayCurtisNest.suc|Observation|Nestedness|Successive Difference|
+|BrayCurtisFull.amm|Observation|Full index|All-moment|
+|BrayCurtisRepl.amm|Observation|Replacement|All-moment|
+|BrayCurtisNest.amm|Observation|Nestedness|All-moment|
+|person_BrayCurtisFull.suc|Group|Full index|Successive Difference|
+|person_BrayCurtisRepl.suc|Group|Replacement|Successive Difference|
+|person_BrayCurtisNest.suc|Group|Nestedness|Successive Difference|
+|person_BrayCurtisFull.amm|Group|Full index|All-moment|
+|person_BrayCurtisRepl.amm|Group|Replacement|All-moment|
+|person_BrayCurtisNest.amm|Group|Nestedness|All-moment|
 
-Group (person-level in ESM) output:
-- person_BrayCurtisFull.suc:	Person-mean of BrayCurtisFull.suc
-- person_... : Person-mean of other moment level dissimilarity output
+
 # How should I prepare my data to calculate dissimilarity?
 - Target variables are in wide data format (i.e., each variable assigned to a column; see below on how to reshape data from long format to wide format)
 - There is a grouping variable ("ppnr", person in ESM study)
 - There is an observation number variable that does not repeat within a person ("triggerid", time point in ESM study)
 - Sort data first by group (person), then observation (time point) in ascending order
+- Do not remove any observations with missing data
 - Make sure all variables have values >=0
 
 Other conditions but they are likely to have been met:
-- At least 2 observations (e.g. Time Point 1 to 6 has 6 observations), where 
+- At least 2 observations (e.g., Time Point 1 to 6 has 6 observations), where: 
 	- both have at least 2 variables (e.g., Distraction and Social Sharing) with values
-- At least 1 value is >0
+	- At least 1 value is >0
 
 # Using an existing dataset
 
 	# Using Data1.sav from https://osf.io/mxjfh/ (Blanke et al., 2020) as an example:
-	rawdataExternal <- read_sav('Data1.sav')
+		rawdataExternal <- read_sav('https://osf.io/download/w8y33/')
 	
-	# please identify the column names of variables you want to include
-	varNameExternal <- c("M_rum2","M_rum1","M_distr2","M_distr1","M_refl2","M_refl1")
-	# please identify the column names of person ID and beep number
-	oldUniqueID = c("ID_anonym","a_ftl_0")
-	identifiers <- rawdataExternal[,oldUniqueID]
-	names(identifiers) <- c("ppnr","triggerid")
-	dfExternal <- cbind(identifiers,rawdataExternal[,varNameExternal])
+	# identify the column names of variables you want to include
+		varNameExternal <-
+		c("M_rum2","M_rum1","M_distr2","M_distr1","M_refl2","M_refl1")
+	# identify the column names of person ID and beep number
+		oldUniqueID = c("ID_anonym","a_ftl_0")
+		identifiers <- rawdataExternal[,oldUniqueID]
+		names(identifiers) <- c("ppnr","triggerid")
+		dfExternal <- cbind(identifiers,rawdataExternal[,varNameExternal])
 
 	# results of calculation
-	calcBrayCurtisESM(dfExternal, varNameExternal,"ppnr","triggerid")
+		calcBrayCurtisESM(dfExternal, varNameExternal,"ppnr","triggerid")
 
 
 # Troubleshooting
@@ -86,12 +98,12 @@ In general,
 	- so the first observation of a person will always return NA for successive difference because there is no previous observation to compare with
 - NaN is due to division by zero, brought by zero values in all variables
 
-Let's denote the moment of interest as *t* .
+Let's denote the moment of interest as *t*.
 - For successive difference, 
 	- missing data at *t* or *t-1* will return NA
 	- zero values for all variables at *t* **and** *t-1* will return NaN for **the full index** 
 	- zero values for all variables at *t* **or** *t-1* will return NaN for **all subcomponents** 
-- For all-moment comparison, missing data at *t*  will return NA  
+- For all-moment comparison, missing data at *t* will return NA  
 - All-moment comparison is calculated by the mean of dissimilarity between *t* and all other moments.
 	- If you set na.rm = TRUE in this calculation process, zero values for all variables
 		- in >=2 observations will return NaN for **the full index and all subcomponents of THOSE observations** 
@@ -102,7 +114,7 @@ Let's denote the moment of interest as *t* .
 			- for **all subcomponents in ALL observations** 
 		- in only 1 observation will return NaN for **all subcomponents in ALL observations** 
 
-Perhaps it is easier to figure out these NA/NaN behaviours by running these codes and inspect the output:
+To these NA/NaN behaviours, run the following code and inspect the output:
 
 	allowSub.na.rm <- TRUE
 	allowPerson.na.rm <- TRUE
@@ -118,12 +130,12 @@ Perhaps it is easier to figure out these NA/NaN behaviours by running these code
 	ppname <- unlist(lapply(1:np, function(x) rep(personName[x],nt)))
 
 
-	#entering the same dataset by variable (strategy)
-	dataManual <- matrix(c(1,8,5,3,3,0,0,5,1,3,3,8,1,8,NA,NA,3,0,1,8,0,0,3,0, #Distraction
+	#enter the dataset by variable (strategy)
+		dataManual <- matrix(c(1,8,5,3,3,0,0,5,1,3,3,8,1,8,NA,NA,3,0,1,8,0,0,3,0, #Distraction
 			       0,0,2,0,0,3,3,2,0,0,0,0,0,0,2,NA,0,3,0,0,0,0,0,3), #Social sharing
 			     nrow = nt*np, ncol = nv, dimnames = list(c(),varNameManual))
-	#enter the same dataset by time point
-	dataManual <- matrix(c(1,0, #Edmund's data
+	#an alternative way to enter the same dataset by time point
+		dataManual <- matrix(c(1,0, #Edmund's data
 			       8,0,
 			       5,2,
 			       3,0,
@@ -155,15 +167,18 @@ Perhaps it is easier to figure out these NA/NaN behaviours by running these code
 	dfManual <- data.frame(cbind(identifiers,dataManual))
 
 	# results of calculation
-	data.frame(ppname,calcBrayCurtisESM(dfManual, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm))
+		data.frame(ppname,calcBrayCurtisESM(dfManual, 
+					varNameManual,varUniqueID[1],varUniqueID[2], 
+					bSubnarm = allowSub.na.rm, 
+					bPersonnarm = allowPerson.na.rm))
 
 ## How do I convert long data to wide data?
 
 Note that you need to have run the codes from the above subsection about NA/NaN for the below codes to work:
 
 	# create a long dataset from the manual dataset for illustration...
-	dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar = varUniqueID)
-	# Reshape back to wide format
-	dfLongToWide <- reshape(dataLong, idvar = varUniqueID, timevar = "Strategy", varying = varNameManual, direction = "wide")
-
-	calcBrayCurtisESM(dfLongToWide, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)
+		dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar = varUniqueID)
+	# reshape back to wide format
+		dfLongToWide <- reshape(dataLong, idvar = varUniqueID, timevar = "Strategy", varying = varNameManual, direction = "wide")
+	# the below should give the same output as before
+		calcBrayCurtisESM(dfLongToWide, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)

@@ -41,7 +41,8 @@ Run the following code to calculate Bray-Curtis dissimilarity with Edmund's data
 	calcBrayCurtisESM(dfTable1,
 			c("Distraction","SocialSharing"),"ppnr","triggerid")
 # What is the output?
-New columns are created and attached to the original dataframe. In the context of ESM study, an observation is a moment, and a group is a person.
+New columns are created and attached to the original dataframe. 
+In the context of an ESM study, an observation is a moment, and a group is a person.
 |Variable|Level|Subcomponent?|Comparison approach|
 |---|---|---|---|
 |BrayCurtisFull.suc|Observation|Full index|Successive Difference|

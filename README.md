@@ -1,9 +1,15 @@
 
 
+
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
-Download [BrayCurtisDissimilarity_for_ESMdata.R](BrayCurtisDissimilarity_for_ESMdata.R) and [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) for annotated codes. 
+The demo code sources two files from the Internet.
+If you want to run this demo offline, please download:
+- [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) from this repo
+-  Data1.sav from https://osf.io/mxjfh/ as an example of external data
+
+ [vignette.R](vignette.R) contains annotated code of this demo.
 
 # Required packages
 

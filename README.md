@@ -176,8 +176,8 @@ To these NA/NaN behaviours, run the following code and inspect the output:
 Note that you need to have run the codes from the above subsection about NA/NaN for the below codes to work:
 
 	# create a long dataset from the manual dataset for illustration...
-		dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar = varUniqueID)
+		dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar =  c("ppnr","triggerid"))
 	# reshape back to wide format
 		dfLongToWide <- reshape(dataLong, idvar = c("ppnr","triggerid"), timevar = "Strategy", varying = varNameManual, direction = "wide")
 	# the below should give the same output as before
-		calcBrayCurtisESM(dfLongToWide, varNameManual,"ppnr","triggerid", bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)
+		data.frame(ppname,calcBrayCurtisESM(dfLongToWide, varNameManual,"ppnr","triggerid", bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm))

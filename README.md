@@ -9,7 +9,6 @@ Download [BrayCurtisDissimilarity_for_ESMdata.R](BrayCurtisDissimilarity_for_ESM
 
 	# Install the below if needed:
 	    install.packages(c("betapart","haven"))
-	    remotes::install_github("wviechtb/esmpack")
 
 	# Load libraries
 		library(betapart)
@@ -118,7 +117,6 @@ To these NA/NaN behaviours, run the following code and inspect the output:
 
 	allowSub.na.rm <- TRUE
 	allowPerson.na.rm <- TRUE
-	varUniqueID <- c("ppnr","triggerid")
 	personName <- c("Edmund","EdmundReorder631452","EdMiss34", "EdZero34")
 	varNameManual <- c("Distraction","SocialSharing")
 	nt <- 6 # number of time points
@@ -163,12 +161,12 @@ To these NA/NaN behaviours, run the following code and inspect the output:
 
 	beep <- c(rep(1:nt,np))
 	identifiers <- data.frame(cbind(ppid,beep))
-	names(identifiers) <- varUniqueID
+	names(identifiers) <- c("ppnr","triggerid")
 	dfManual <- data.frame(cbind(identifiers,dataManual))
 
 	# results of calculation
 		data.frame(ppname,calcBrayCurtisESM(dfManual, 
-					varNameManual,varUniqueID[1],varUniqueID[2], 
+					varNameManual,"ppnr","triggerid", 
 					bSubnarm = allowSub.na.rm, 
 					bPersonnarm = allowPerson.na.rm))
 

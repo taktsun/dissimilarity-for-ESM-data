@@ -178,6 +178,6 @@ Note that you need to have run the codes from the above subsection about NA/NaN 
 	# create a long dataset from the manual dataset for illustration...
 		dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar = varUniqueID)
 	# reshape back to wide format
-		dfLongToWide <- reshape(dataLong, idvar = varUniqueID, timevar = "Strategy", varying = varNameManual, direction = "wide")
+		dfLongToWide <- reshape(dataLong, idvar = c("ppnr","triggerid"), timevar = "Strategy", varying = varNameManual, direction = "wide")
 	# the below should give the same output as before
-		calcBrayCurtisESM(dfLongToWide, varNameManual,varUniqueID[1],varUniqueID[2], bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)
+		calcBrayCurtisESM(dfLongToWide, varNameManual,"ppnr","triggerid", bSubnarm = allowSub.na.rm, bPersonnarm = allowPerson.na.rm)

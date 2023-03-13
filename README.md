@@ -4,12 +4,11 @@
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
-The demo code sources two files from the Internet.
-If you want to run this demo offline, please download:
+The demo code, based on [vignette.R](vignette.R), sources two files from the Internet. If you want to run this demo offline, please download:
 - [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) from this repo
 -  Data1.sav from https://osf.io/mxjfh/ as an example of external data
 
- [vignette.R](vignette.R) contains annotated code of this demo.
+If you want to use your own dataset right away, go to [# Using an existing dataset](# Using an existing dataset).
 
 # Required packages
 
@@ -79,6 +78,8 @@ Other conditions but they are likely to have been met:
 	- At least 1 value is >0
 
 # Using an existing dataset
+
+If you want to use your own dataset, replace read_sav('https://osf.io/download/w8y33/') with read_sav('yourdata.sav'), read.csv('yourdata.csv'), or anything similar.
 
 	# Using Data1.sav from https://osf.io/mxjfh/ (Blanke et al., 2020) as an example:
 		rawdataExternal <- read_sav('https://osf.io/download/w8y33/')

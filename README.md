@@ -8,7 +8,7 @@ The demo code, based on [vignette.R](vignette.R), sources two files from the Int
 - [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) from this repo
 -  Data1.sav from https://osf.io/mxjfh/ as an example of external data
 
-[Click here to go to the relevant section if you want to use your dataset right away](#-Using-an-existing-dataset).
+[Click here to go to the relevant section if you want to use your dataset right away](#using-an-existing-dataset).
 
 # Required packages
 

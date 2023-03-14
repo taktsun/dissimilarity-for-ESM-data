@@ -121,7 +121,7 @@ Let's denote the moment of interest as *t*.
 			- for **all subcomponents in ALL observations** 
 		- in only 1 observation will return NaN for **all subcomponents in ALL observations** 
 
-To these NA/NaN behaviours, run the following code and inspect the output:
+To understand these NA/NaN behaviours, run the following code and inspect the output:
 
 	allowSub.na.rm <- TRUE
 	allowPerson.na.rm <- TRUE

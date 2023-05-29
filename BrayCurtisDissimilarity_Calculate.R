@@ -33,10 +33,8 @@ calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = T
   vbray.full <- NULL
   vbray.repl <- NULL
   vbray.nest <- NULL
-
-    
-  for (i in 1:length(unique(dTemp[pid]))){
-    dPerson <- dTemp[dTemp[pid]==unique(dTemp[pid])[[i]],] # create a temp d for each person
+  for (i in 1:nrow(unique(dTemp[pid]))){
+    dPerson <- dTemp[dTemp[pid]==unlist(unique(dTemp[pid]))[[i]],] # create a temp d for each person
     matx <- dPerson[,vn]
     nobs <- nrow(dPerson)
     resbray <- bray.part(matx)

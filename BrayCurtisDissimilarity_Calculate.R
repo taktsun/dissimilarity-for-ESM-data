@@ -5,7 +5,8 @@ library(betapart)
 calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = TRUE){
   m<- d[,vn]
   # T/F values for each observation
-  d$b_firstbeep <- d[tid]==ave(d[tid], d[pid], FUN = min)
+  b_firstbeep<-as.vector(d[tid]==ave(d[tid], d[pid], FUN = min))
+  d$b_firstbeep <- b_firstbeep
   d$b_completeER <- complete.cases(m)
 
   # Calculate Bray-Curtis dissimilarity (successive difference)
@@ -32,8 +33,10 @@ calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = T
   vbray.full <- NULL
   vbray.repl <- NULL
   vbray.nest <- NULL
-  for (i in 1:length(unique(dTemp$ppnr))){
-    dPerson <- dTemp[dTemp$ppnr==unique(dTemp$ppnr)[i],] # create a temp d for each person
+
+    
+  for (i in 1:length(unique(dTemp[pid]))){
+    dPerson <- dTemp[dTemp[pid]==unique(dTemp[pid])[[i]],] # create a temp d for each person
     matx <- dPerson[,vn]
     nobs <- nrow(dPerson)
     resbray <- bray.part(matx)

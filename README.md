@@ -9,7 +9,7 @@ The demo code, based on [vignette.R](vignette.R), sources two files from the Int
 - [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R) from this repo
 -  Data1.sav from https://osf.io/mxjfh/ as an example of external data
 
-[Want to use your dataset right away? Read this section.](#using-an-existing-dataset).
+[Want to use your dataset right away? Read this section.](#using-an-existing-dataset)
 
 # Required packages
 
@@ -91,10 +91,10 @@ If you want to use your own dataset, replace read_sav('https://osf.io/download/w
 		varNameExternal <-
 		c("M_rum2","M_rum1","M_distr2","M_distr1","M_refl2","M_refl1")
 	# identify the column names of person ID and beep number
-		pid = "ID_anonym"
-		tid = "a_ftl_0"
+		pid = "ID_anonym" # participant identifer
+		tid = "a_ftl_0" # trigger/beep identifer (within a person and should not reset with each day)
+	# create a new dataframe, dfExternal...
 		identifiers <- rawdataExternal[,c(pid,tid)]
-		names(identifiers) <- c("ppnr","triggerid")
 		dfExternal <- cbind(identifiers,rawdataExternal[,varNameExternal])
 
 	# results of calculation

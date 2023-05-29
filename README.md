@@ -1,6 +1,7 @@
 
 
 
+
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
@@ -43,8 +44,10 @@ Run the following code to get Edmund's dataset above, which is equivalent to Tab
 	                       
 Run the following code to calculate Bray-Curtis dissimilarity with Edmund's data:
 
-	calcBrayCurtisESM(dfTable1,
-			c("Distraction","SocialSharing"),"ppnr","triggerid")
+	calcBrayCurtisESM(d = dfTable1, # dataframe
+	                  vn =  c("Distraction","SocialSharing"), # list of variables
+	                  pid = "ppnr", # participant identifier
+	                  tid = "triggerid") # trigger/beep identifier
 # What is the output?
 New columns are created and attached to the original dataframe. 
 In the context of an ESM study, an observation is a moment, and a group is a person.
@@ -65,7 +68,7 @@ In the context of an ESM study, an observation is a moment, and a group is a per
 
 
 # How should I prepare my data to calculate dissimilarity?
-- Target variables are in wide data format (i.e., each variable assigned to a column; see below on how to reshape data from long format to wide format)
+- Each target variable needs to be assigned to a separate column - see [example dataset above](#quickly-reproducing-edmunds-2-variable-dataset) as reference. If needed, at the end of this tutorial, there is a subsection on reshaping data.
 - There is a grouping variable ("ppnr", person in ESM study)
 - There is an observation number variable that does not repeat within a person ("triggerid", time point in ESM study)
 - Sort data first by group (person), then observation (time point) in ascending order
@@ -178,9 +181,9 @@ To understand these NA/NaN behaviours, run the following code and inspect the ou
 					bSubnarm = allowSub.na.rm, 
 					bPersonnarm = allowPerson.na.rm))
 
-## How do I convert long data to wide data?
+## How do I reshape data to the required format?
 
-Note that you need to have run the codes from the above subsection about NA/NaN for the below codes to work:
+You need to reshape your data if the target variables are in long format but not occupying separate columns. Note that you need to have run the codes from the above subsection about NA/NaN for the below codes to work:
 
 	# create a long dataset from the manual dataset for illustration...
 		dataLong <- reshape(dfManual, direction = "long", varying = varNameManual,v.names="Score", timevar = "Strategy", times = varNameManual, idvar =  c("ppnr","triggerid"))

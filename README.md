@@ -91,13 +91,14 @@ If you want to use your own dataset, replace read_sav('https://osf.io/download/w
 		varNameExternal <-
 		c("M_rum2","M_rum1","M_distr2","M_distr1","M_refl2","M_refl1")
 	# identify the column names of person ID and beep number
-		oldUniqueID = c("ID_anonym","a_ftl_0")
-		identifiers <- rawdataExternal[,oldUniqueID]
+		pid = "ID_anonym"
+		tid = "a_ftl_0"
+		identifiers <- rawdataExternal[,c(pid,tid)]
 		names(identifiers) <- c("ppnr","triggerid")
 		dfExternal <- cbind(identifiers,rawdataExternal[,varNameExternal])
 
 	# results of calculation
-		calcBrayCurtisESM(dfExternal, varNameExternal,"ppnr","triggerid")
+		calcBrayCurtisESM(dfExternal, varNameExternal,pid,tid)
 
 
 # Troubleshooting

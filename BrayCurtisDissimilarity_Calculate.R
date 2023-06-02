@@ -4,6 +4,9 @@
 library(betapart)
 calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = TRUE){
   m<- d[,vn]
+  if (any (table(d[,c(pid,tid)]) >1)){
+    stop("There are duplicated observations/beeps in some of the groups(individuals). Calculation halted.")
+  }
   # T/F values for each observation
   b_firstbeep<-as.vector(d[tid]==ave(d[tid], d[pid], FUN = min))
   d$b_firstbeep <- b_firstbeep
@@ -30,15 +33,20 @@ calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = T
   # exclude rows with all NA or only 1 available score, because bray.part needs at least 2 variables for calculation
   dTemp <- d[rowSums(is.na(d[,vn])) < (ncol(d[,vn])-1),
              append(c(pid,tid),vn)] #include only ER items and binding info
+  # remove groups (individuals) with only 1 row left
+  dTemp <- dTemp[ave(dTemp[tid], dTemp[pid], FUN = nrow) > 1, ]
+  
   vbray.full <- NULL
   vbray.repl <- NULL
   vbray.nest <- NULL
   for (i in 1:nrow(unique(dTemp[pid]))){
     dPerson <- dTemp[dTemp[pid]==unlist(unique(dTemp[pid]))[[i]],] # create a temp d for each person
+    if(is.unsorted(unlist(as.vector(dPerson[tid])))){
+      stop(paste0("Group(participant) ",dPerson[1,pid]," has unsorted observations/beeps. Calculation halted."))
+    }
     matx <- dPerson[,vn]
     nobs <- nrow(dPerson)
     resbray <- bray.part(matx)
-
     vtemp <- colMeans(as.matrix(resbray$bray))
     vtemp <- ifelse(bSubnarm & is.na(as.matrix(resbray$bray)[,1]),as.matrix(resbray$bray)[,1],vtemp)
     vbray.full <- append(vbray.full,vtemp*nobs/(nobs-1))
@@ -56,7 +64,6 @@ calcBrayCurtisESM <- function (d, vn, pid, tid, bSubnarm = TRUE, bPersonnarm = T
 
   dTemp<- dTemp[,setdiff(names(dTemp), vn)] # remove vn cols
   d<- merge(d,dTemp, by=c(pid,tid),all=TRUE)
-
 
   # calculate person-mean of dissimilarity
   d$person_BrayCurtisFull.suc <- ave(d$BrayCurtisFull.suc, d[pid], FUN = function(x) mean(x, na.rm = bPersonnarm))

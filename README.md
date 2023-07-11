@@ -2,6 +2,7 @@
 
 
 
+
 # Dissimilarity-for-ESM-data
 A demo on calculating [Bray-Curtis dissimilarity](https://github.com/taktsun/dissimilarity-for-ESM-data/blob/3a285d405a1d05c30b7a4967a31e1cd98e97450e/WhatisBrayCurtisDissimilarity.md) with multivariate time series data which are grouped by persons. Here, we showcase with emotion regulation (ER) experience sampling method (ESM) data.
 
@@ -101,7 +102,30 @@ If you want to use your own dataset, replace read_sav('https://osf.io/download/w
 		calcBrayCurtisESM(dfExternal, varNameExternal,pid,tid)
 
 
-# Troubleshooting
+# Troubleshooting/Extra
+
+## Can I use the script if my data are binary (0/1)? 
+
+In [BrayCurtisDissimilarity_Calculate.R](BrayCurtisDissimilarity_Calculate.R), we make use of `bray.part()` from betapart to calculate Bray-Curtis dissimilarity. When used with binary data, `bray.part()` give the same calculation results as `beta.pair()`, a dedicated function for binary data,  as shown below.
+
+	library(betapart)
+	data(ceram.s) # a dataset from betapart with only binary/incidence data
+	df<-ceram.s
+	dis.binary <- beta.pair(df, index.family="sorensen") # Sørensen dissimilarity for binary data
+	dis.bray <- bray.part(df) # Bray-Curtis dissimilarity
+
+	# only name and attribute mismatches but no value mismatches
+	all.equal(dis.binary,dis.bray)
+
+	# if another index family dissimilarity is used (e.g., Ruzicka)
+	dis.ruz <- beta.pair.abund(df, index.family = "ruz")
+	# the values will be different, as shown by "mean relative difference:..."
+	all.equal(dis.binary,dis.ruz)
+
+This is not surprising, because Bray-Curtis dissimilarity is an extension of the Sørensen dissimilarity. The formula of Sørensen dissimilarity (see [Baselga, 2010](https://doi.org/10.1111/j.1466-8238.2009.00490.x)) is basically the same as that of Bray-Curtis dissimilarity (see [Baselga, 2013](https://doi.org/10.1111/2041-210X.12029)), except the data type that the formulae are pertained to be working with.
+
+One drawback of `bray.part()` is that it doesn't not warn you if there are non-binary values in your data (i.e., values other than 0 or 1).
+You are encouraged to cross-check the results between `bray.part()`and  `beta.pair()` before using our script to work with your binary ESM data.
 
 ## Why is there NA/NaN?
 In general,

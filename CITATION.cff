@@ -1,0 +1,32 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Bray-Curtis dissimilarity for ESM data
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Tak Tsun
+    family-names: Lo
+    email: edmund.lo@ru.nl
+    orcid: 'https://orcid.org/0000-0002-5926-2430'
+    affiliation: >-
+      Behavioural Science Institute, Radboud University,
+      Nijmegen, the Netherlands
+repository-code: 'https://github.com/taktsun/dissimilarity-for-ESM-data'
+abstract: >-
+  A demo on calculating Bray-Curtis dissimilarity with
+  multivariate time series data which are grouped by
+  persons. A part of supplemental materials of the journal
+  article A  Theory-Informed Emotion Regulation Variability
+  Index: Bray-Curtis Dissimilarity.
+keywords:
+  - Emotion Regulation
+  - Variability
+  - Dynamics
+  - Within-Person
+  - Experience Sampling Methods
+license: Apache-2.0
+date-released: '2023-07-11'
